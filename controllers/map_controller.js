@@ -2,11 +2,14 @@
 const maps = require('express').Router()
 const db = require('../models')
 const { Map } = db 
+const { QueryTypes, where } = require('sequelize')
 
 // FIND ALL MAPS
 maps.get('/', async (req, res) => {
     try {
-        const foundMaps = await Map.findAll()
+        const foundMaps = await Map.findAll({
+            attributes: ['id','Map_Name','Projectiles_placement', 'Coins_placement']
+        })
         res.status(200).json(foundMaps)
         console.log('all good!')
     } catch (error) {
@@ -19,7 +22,8 @@ maps.get('/', async (req, res) => {
 maps.get('/:id', async (req, res) => {
     try {
         const foundMap = await Map.findOne({
-            where: { id: req.params.id }
+            where: { id: req.params.id },
+            attributes: ['Map_Name','Projectiles_placement', 'Coins_placement']
         })
         res.status(200).json(foundMap)
     } catch (error) {

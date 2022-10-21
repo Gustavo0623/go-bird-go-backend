@@ -2,7 +2,7 @@
 const express = require ('express')
 const app = express()
 const { Sequelize } = require('sequelize')
-
+const cors = require('cors')
 
 
 
@@ -10,6 +10,11 @@ const { Sequelize } = require('sequelize')
 require('dotenv').config()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(
+    cors({
+        origin: 'http://localhost:3000'
+    })
+)
 
 // SEQUELIZE CONNECTION
 const sequelize = new Sequelize(process.env.PG_URI)
