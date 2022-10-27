@@ -45,11 +45,11 @@ maps.post('/new-map', async (req, res) => {
 })
 
 // UPDATE A MAP
-maps.put('/:id', async (req, res) => {
+maps.put('/:Map_Name', async (req, res) => {
     try {
         const updatedMaps = await Map.update(req.body, {
             where: {
-                id: req.params.id
+                Map_Name: req.params.Map_Name
             }
         })
         res.status(200).json({
