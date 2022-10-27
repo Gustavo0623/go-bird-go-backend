@@ -2,7 +2,6 @@
 const maps = require('express').Router()
 const db = require('../models')
 const { Map } = db 
-const { QueryTypes, where } = require('sequelize')
 
 // FIND ALL MAPS
 maps.get('/', async (req, res) => {
@@ -32,7 +31,7 @@ maps.get('/:id', async (req, res) => {
 })
 
 // CREATE A MAP
-maps.post('/', async (req, res) => {
+maps.post('/new-map', async (req, res) => {
     try {
         const newMap = await Map.create(req.body)
         res.status(200).json({
@@ -40,6 +39,7 @@ maps.post('/', async (req, res) => {
             data: newMap
         })
     } catch(err) {
+        console.log(req.body)
         res.status(500).json(err)
     }
 })
@@ -61,11 +61,11 @@ maps.put('/:id', async (req, res) => {
 })
 
 // DELETE A MAP
-maps.delete('/:id', async (req, res) => {
+maps.delete('/:Map_Name', async (req, res) => {
     try {
         const deletedMaps = await Map.destroy({
             where: {
-                id: req.params.id
+                Map_Name: req.params.Map_Name
             }
         })
         res.status(200).json({
